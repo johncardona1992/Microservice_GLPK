@@ -22,22 +22,22 @@ param E{s in S, p in P};
 param t{l in G};
 /* parameters */
 
-table tab_Shifts IN "CSV" "S.csv" :
+table tab_Shifts IN "CSV" "MILP/S.csv" :
   S <- [S_ID];
   
-table tab_Agents IN "CSV" "A.csv" :
+table tab_Agents IN "CSV" "MILP/A.csv" :
   A <- [A_ID];
   
-table tab_Periods IN "CSV" "P.csv" :
+table tab_Periods IN "CSV" "MILP/P.csv" :
   P <- [Period], N ~ REQ;
 
-table tab_Net IN "CSV" "E.csv" :
+table tab_Net IN "CSV" "MILP/E.csv" :
 [S_ID, Period], E ~ E_value;
 
-table tab_Feasibility IN "CSV" "L.csv" :
+table tab_Feasibility IN "CSV" "MILP/L.csv" :
 K <-[A_ID, S_ID];
 
-table tab_parameter IN "CSV" "Global_parameters.csv" :
+table tab_parameter IN "CSV" "MILP/Global_parameters.csv" :
   G <- [Parameter], t ~ Value ;
 
 param CU := t['CostUnder'];
@@ -64,7 +64,7 @@ printf "Costo Total: %0.2f, faltantes: %i\n", (sum{p in P}u[p]*CU), (sum{p in P}
 
 
 
-table tab_result{a in A, s in S: x[a,s] == 1} OUT "CSV" "result.csv" :
+table tab_result{a in A, s in S: x[a,s] == 1} OUT "CSV" "MILP/result.csv" :
   a ~ A_ID, s ~ S_ID, x[a,s] ~ x_value;
 
 end;
