@@ -4,14 +4,18 @@ FROM ubuntu:latest
 # Switch to root for install
 USER root
 
-# Install wget and Node.js version 19.x
+# install Node js 19 
+RUN apt-get update
+RUN apt-get -y install curl gnupg
+RUN curl -sL https://deb.nodesource.com/setup_19.x  | bash -
+RUN apt-get -y install nodejs
+
+# Install wget
 RUN apt-get update -y && apt-get install -y \
 	wget \
 	build-essential \
 	--no-install-recommends \
-	&& rm -rf /var/lib/apt/lists/* \
-    && wget -qO- https://deb.nodesource.com/setup_19.x | bash - \
-    && apt-get install -y nodejs
+	&& rm -rf /var/lib/apt/lists/* 
 
 # Install glpk from http
 # instructions and documentation for glpk: http://www.gnu.org/software/glpk/
@@ -47,8 +51,9 @@ RUN useradd --create-home --home-dir $HOME user \
 WORKDIR $HOME
 # copy model and parameters
 COPY . $HOME
-
-# sudo docker run --memory="3g" --memory-swap="4g" -ti --rm <imageId> /bin/bash
+# install Node application
+RUN npm install
+# sudo docker run --memory="3g" --memory-swap="4g" -ti -name glpk_container --rm glpk_micro /bin/bash
 
 USER user
 
