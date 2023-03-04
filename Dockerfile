@@ -53,7 +53,8 @@ WORKDIR $HOME
 COPY . $HOME
 # install Node application
 RUN npm install
-# sudo docker run --memory="3g" --memory-swap="4g" -ti -name glpk_container --rm glpk_micro /bin/bash
+# sudo docker run --memory="3g" --memory-swap="4g" -ti --name glpk_micro --rm glpk_image /bin/bash
 
-USER user
+# USER user
 
+#  ejecutar la API.
