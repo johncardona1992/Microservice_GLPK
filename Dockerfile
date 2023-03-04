@@ -1,5 +1,5 @@
 # Set the base image to Ubuntu
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
 # Switch to root for install
 USER root
