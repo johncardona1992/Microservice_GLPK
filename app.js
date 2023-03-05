@@ -6,8 +6,7 @@ const { parse } = require("papaparse");
 const process = spawn("glpsol", ["-m", "MILP/Optimizer.mod"]);
 
 process.on("close", (code) => {
-    console.log(`glpsol process exited with code ${code}\n`);
-    
+    // read csv file, Sync should not be used on production as it blocks the other threads
     const csv = readFileSync("MILP/result.csv", "utf-8");
     
     // Parse the CSV string into an array of objects
@@ -17,4 +16,5 @@ process.on("close", (code) => {
     const jsonString = JSON.stringify(data);
     
     console.log(jsonString);
+    console.log(`\nglpsol process exited with code ${code}`);
 });

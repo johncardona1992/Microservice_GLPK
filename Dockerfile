@@ -47,12 +47,14 @@ RUN useradd --create-home --home-dir $HOME user \
     && chown -R user:user $HOME \
     && chmod -R a+rwx $HOME
 
+# expose port 3000
+EXPOSE 3000
 # switch back to user
 WORKDIR $HOME
 # copy node configuration
 COPY package.json package-lock.json* ./
 # install Node application
-RUN npm install
+RUN npm install && npm cache clean --force
 # copy model and parameters
 COPY . $HOME
 # Change ownership to user
@@ -61,3 +63,4 @@ RUN chown -R user:user $HOME
 USER user
 
 # ejecutar la API.
+# CMD ["node", "app.js"]
